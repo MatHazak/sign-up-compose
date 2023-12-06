@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sign up Compose</string>
+    <string name="first_name">نام: %1$s</string>
+    <string name="last_name">نام‌خانوادگی: %1$s</string>
+    <string name="birth_date">تاریخ تولد: %1$s</string>
+    <string name="national_id">کد ملی: %1$s</string>
+    <string name="logout">خروج</string>
+    <string name="first_name_label">نام</string>
+    <string name="last_name_label">نام‌خانوادگی</string>
+    <string name="national_id_label">کد ملی</string>
+    <string name="login">ورود</string>
+    <string name="birth_date_label">تاریخ تولد</string>
+    <string name="ok">تایید</string>
+    <string name="cancel">لغو</string>
+</resources>
