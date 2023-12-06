@@ -26,53 +26,58 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun Login(navigateToInfo: () -> Unit, modifier: Modifier = Modifier) {
+fun Login(
+    navigateToInfo: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = viewModel()
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        var firstName by remember { mutableStateOf("") }
-        var lastName by remember { mutableStateOf("") }
-        var birthDate by remember { mutableStateOf("") }
-        var nationalId by remember { mutableStateOf("") }
-
         OutlinedTextField(
-            value = firstName,
-            onValueChange = { newValue -> firstName = newValue },
+            value = viewModel.firstName.value,
+            onValueChange = viewModel::changeFirstName,
             singleLine = true,
             label = { Text(text = "First Name") },
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = lastName,
-            onValueChange = { newValue -> lastName = newValue },
+            value = viewModel.lastName.value,
+            onValueChange = viewModel::changeLastName,
             singleLine = true,
             label = { Text(text = "Last Name") },
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         MyDatePickerDialog(
-            date = birthDate,
-            onDateSelected = { newValue -> birthDate = newValue })
+            date = viewModel.birthDate.value,
+            onDateSelected = viewModel::changeBirthDate
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = nationalId,
-            onValueChange = { newValue -> nationalId = newValue },
+            value = viewModel.nationalId.value,
+            onValueChange = viewModel::changeNationalId,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(text = "National ID") },
         )
 
         Spacer(modifier = Modifier.height(32.dp))
-        Button(onClick = navigateToInfo) {
+        Button(onClick = {
+            viewModel.submitUser()
+            navigateToInfo()
+        }
+        ) {
             Text(text = "Login")
         }
     }

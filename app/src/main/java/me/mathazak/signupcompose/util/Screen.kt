@@ -1,4 +1,4 @@
-package me.mathazak.signupcompose.ui
+package me.mathazak.signupcompose.util
 
 sealed class Screen(val route: String) {
     data object LoginScreen: Screen("LoginScreen")
