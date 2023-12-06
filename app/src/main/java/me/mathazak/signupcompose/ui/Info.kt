@@ -15,15 +15,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Info(navigateToLogin: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.padding(horizontal = 24.dp),
+        modifier = modifier.padding(horizontal = 32.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start,
     ) {
-        Text(text = "Name: ")
+        Text(text = "First Name: ")
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Family Name: ")
+        Text(text = "Last Name: ")
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Date of Birth: ")
+        Text(text = "Birth Date: ")
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "National ID: ")
         Spacer(modifier = Modifier.height(32.dp))

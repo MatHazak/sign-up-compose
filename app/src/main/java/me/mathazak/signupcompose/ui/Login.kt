@@ -1,13 +1,22 @@
 package me.mathazak.signupcompose.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun Login(navigateToInfo: () -> Unit, modifier: Modifier = Modifier) {
@@ -25,35 +37,115 @@ fun Login(navigateToInfo: () -> Unit, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        var name by remember { mutableStateOf("") }
-        var familyName by remember { mutableStateOf("") }
+        var firstName by remember { mutableStateOf("") }
+        var lastName by remember { mutableStateOf("") }
         var birthDate by remember { mutableStateOf("") }
         var nationalId by remember { mutableStateOf("") }
 
-        TextField(
-            value = name,
-            onValueChange = { newValue -> name = newValue },
-            maxLines = 1,
-            placeholder = { Text(text = "Name") },
+        OutlinedTextField(
+            value = firstName,
+            onValueChange = { newValue -> firstName = newValue },
+            singleLine = true,
+            label = { Text(text = "First Name") },
         )
+
         Spacer(modifier = Modifier.height(16.dp))
-        TextField(
-            value = familyName,
-            onValueChange = { newValue -> familyName = newValue },
-            maxLines = 1,
-            placeholder = { Text(text = "Family Name") },
+        OutlinedTextField(
+            value = lastName,
+            onValueChange = { newValue -> lastName = newValue },
+            singleLine = true,
+            label = { Text(text = "Last Name") },
         )
+
         Spacer(modifier = Modifier.height(16.dp))
-        TextField(
+        MyDatePickerDialog(
+            date = birthDate,
+            onDateSelected = { newValue -> birthDate = newValue })
+
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
             value = nationalId,
             onValueChange = { newValue -> nationalId = newValue },
-            maxLines = 1,
+            singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            placeholder = { Text(text = "National ID") },
+            label = { Text(text = "National ID") },
         )
+
         Spacer(modifier = Modifier.height(32.dp))
         Button(onClick = navigateToInfo) {
             Text(text = "Login")
         }
     }
+}
+
+@Composable
+fun MyDatePickerDialog(
+    date: String,
+    onDateSelected: (String) -> Unit,
+) {
+    var showDatePicker by remember { mutableStateOf(false) }
+
+    Box {
+        OutlinedTextField(
+            value = date,
+            onValueChange = {},
+            trailingIcon = {
+                Icon(imageVector = Icons.Outlined.DateRange, contentDescription = null)
+            },
+            readOnly = true,
+            label = { Text(text = "Birth Date") },
+        )
+        Box(
+            modifier = Modifier
+                .clickable { showDatePicker = true }
+                .matchParentSize()) {
+        }
+    }
+
+    if (showDatePicker) {
+        MyDatePickerDialog(
+            onDateSelected = onDateSelected,
+            onDismiss = { showDatePicker = false }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyDatePickerDialog(
+    onDateSelected: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val datePickerState = rememberDatePickerState()
+
+    val selectedDate = datePickerState.selectedDateMillis?.let {
+        convertMillisToDate(it)
+    } ?: ""
+    DatePickerDialog(
+        onDismissRequest = { onDismiss() },
+        confirmButton = {
+            Button(onClick = {
+                onDateSelected(selectedDate)
+                onDismiss()
+            }) {
+                Text(text = "OK")
+            }
+        },
+        dismissButton = {
+            Button(onClick = {
+                onDismiss()
+            }) {
+                Text(text = "Cancel")
+            }
+        }
+    ) {
+        DatePicker(
+            state = datePickerState
+        )
+    }
+}
+
+private fun convertMillisToDate(millis: Long): String {
+    val formatter = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+    return formatter.format(Date(millis))
 }
