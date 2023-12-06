@@ -24,9 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import me.mathazak.signupcompose.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,7 +48,7 @@ fun Login(
             value = viewModel.firstName.value,
             onValueChange = viewModel::changeFirstName,
             singleLine = true,
-            label = { Text(text = "First Name") },
+            label = { Text(text = stringResource(R.string.first_name_label)) },
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -54,7 +56,7 @@ fun Login(
             value = viewModel.lastName.value,
             onValueChange = viewModel::changeLastName,
             singleLine = true,
-            label = { Text(text = "Last Name") },
+            label = { Text(text = stringResource(R.string.last_name_label)) },
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -69,7 +71,7 @@ fun Login(
             onValueChange = viewModel::changeNationalId,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(text = "National ID") },
+            label = { Text(text = stringResource(R.string.national_id_label)) },
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -78,7 +80,7 @@ fun Login(
             navigateToInfo()
         }
         ) {
-            Text(text = "Login")
+            Text(text = stringResource(R.string.login))
         }
     }
 }
@@ -98,7 +100,7 @@ fun MyDatePickerDialog(
                 Icon(imageVector = Icons.Outlined.DateRange, contentDescription = null)
             },
             readOnly = true,
-            label = { Text(text = "Birth Date") },
+            label = { Text(text = stringResource(R.string.birth_date_label)) },
         )
         Box(
             modifier = Modifier
@@ -133,14 +135,14 @@ fun MyDatePickerDialog(
                 onDateSelected(selectedDate)
                 onDismiss()
             }) {
-                Text(text = "OK")
+                Text(text = stringResource(R.string.ok))
             }
         },
         dismissButton = {
             Button(onClick = {
                 onDismiss()
             }) {
-                Text(text = "Cancel")
+                Text(text = stringResource(R.string.cancel))
             }
         }
     ) {

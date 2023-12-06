@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import me.mathazak.signupcompose.R
 
 @Composable
 fun Info(
@@ -26,13 +28,13 @@ fun Info(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start,
     ) {
-        Text(text = "First Name: ${userInfo.value.firstName}")
+        Text(text = stringResource(R.string.first_name, userInfo.value.firstName))
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Last Name: ${userInfo.value.lastName}")
+        Text(text = stringResource(R.string.last_name, userInfo.value.lastName))
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Birth Date: ${userInfo.value.birthDate}")
+        Text(text = stringResource(R.string.birth_date, userInfo.value.birthDate))
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "National ID: ${userInfo.value.nationalId}")
+        Text(text = stringResource(R.string.national_id, userInfo.value.nationalId))
         Spacer(modifier = Modifier.height(32.dp))
         Button(
             onClick = {
@@ -41,7 +43,7 @@ fun Info(
             },
             modifier = Modifier.align(Alignment.End)
         ) {
-            Text(text = "Logout")
+            Text(text = stringResource(R.string.logout))
         }
     }
 }
